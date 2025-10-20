@@ -46,3 +46,20 @@ Great!, you have ready installed and running the project and now you can navigat
 ```
 
     
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`DB_NAME=blossomTest`
+
+`DB_USER=root`
+
+`DB_PASS=""`
+
+`DB_HOST=localhost`
+
+`# DB_DIALECT='mysql'`
+
+`PORT=4000`
+
+
