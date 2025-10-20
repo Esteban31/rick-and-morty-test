@@ -1,5 +1,5 @@
 import axios from 'axios';
-import redisClient from '../services/redis.config.js';
+import redisClient from '../services/redis.service.js';
 import { Character } from '../models/Character.js';
 
 export const getCharacters = async (args) => {
@@ -7,11 +7,11 @@ export const getCharacters = async (args) => {
   const cached = await redisClient.get(cacheKey);
 
   if (cached) {
-    console.log('🧠 Cache hit');
+    console.log('Cache Hit');
     return JSON.parse(cached);
   }
 
-  console.log('🌐 Fetching from API...');
+  console.log('Loading Data FROM Rick and Morty API...');
   const { data } = await axios.post('https://rickandmortyapi.com/graphql', {
     query: `
       {
@@ -45,12 +45,11 @@ export const getCharacters = async (args) => {
     origin: c.origin.name
   }));
 
-  // Guardar en DB si no existen
   for (const char of characters) {
     await Character.upsert(char);
   }
 
-  // Cachear por 1 hora
+//   CacheHit for  almost 1 hour
   await redisClient.set(cacheKey, JSON.stringify(characters), { EX: 3600 });
 
   return characters;

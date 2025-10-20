@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import { sequelize } from '../database.js';
+import { sequelize } from '../../database.js';
 
 export const Character = sequelize.define('Character', {
   id: { type: DataTypes.INTEGER, primaryKey: true },

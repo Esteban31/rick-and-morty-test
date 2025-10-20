@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: rickandmortytest-container
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - DB_NAME=blossomtest
+      - DB_USER=root
+      - DB_PASS=
+      - DB_HOST=host.docker.internal
+      - DB_DIALECT=mysql
+    depends_on:
+      - redis
+    command: ["node", "index.js"]
+
+  redis:
+    image: redis:alpine
+    container_name: rickandmortytest-redis
+    ports:
+      - "6379:6379"
